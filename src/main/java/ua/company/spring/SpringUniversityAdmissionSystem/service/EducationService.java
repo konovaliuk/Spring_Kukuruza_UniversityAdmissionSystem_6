@@ -43,9 +43,8 @@ public class EducationService {
     }
 
     public Page<Specialty> getSpecialties(Integer universityId, Pageable pageable) {
-        Optional<University> university = daoUniversity.find(universityId);
-        University u = university.orElseThrow(RuntimeException::new);
-        Page<EducationOption> educationOptions = daoEducationOption.findByUniversity(u, pageable);
+        University university = daoUniversity.find(universityId).orElseThrow(RuntimeException::new);
+        Page<EducationOption> educationOptions = daoEducationOption.findByUniversity(university, pageable);
         return educationOptions.map(EducationOption::getSpecialty);
     }
 

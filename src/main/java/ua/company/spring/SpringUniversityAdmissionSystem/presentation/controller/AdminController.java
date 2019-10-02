@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.entity.Subject;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.entity.User;
@@ -14,6 +15,7 @@ import ua.company.spring.SpringUniversityAdmissionSystem.util.Path;
 import java.util.List;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
     private AdminService service;
 
@@ -21,22 +23,22 @@ public class AdminController {
         this.service = service;
     }
 
-    @GetMapping("/admin/adminPage")
+    @GetMapping("/adminPage")
     public String adminPage() {
         return Path.ADMIN_PAGE;
     }
 
-    @GetMapping("/admin/setGrade")
+    @GetMapping("/setGrade")
     public String setGradePage() {
         return Path.SET_GRADE_PAGE;
     }
 
-    @GetMapping("/admin/sendNotification")
+    @GetMapping("/sendNotification")
     public String sendNotificationPage() {
         return Path.SEND_NOTIFICATION_PAGE;
     }
 
-    @PostMapping("/admin/findUserSettingGrade")
+    @PostMapping("/findUserSettingGrade")
     public String findUserSettingGrade(@RequestParam("first_name") String firstName,
                                        @RequestParam("second_name") String secondName,
                                        ModelMap model) {
@@ -52,7 +54,7 @@ public class AdminController {
         return Path.SET_GRADE_PAGE;
     }
 
-    @PostMapping("/admin/setGrade")
+    @PostMapping("/setGrade")
     public String settingGrade(@RequestParam("subject_id") Integer subjectId,
                                @RequestParam("user_id") Long userId,
                                @RequestParam("result") Integer result,
@@ -62,7 +64,7 @@ public class AdminController {
         return Path.SET_GRADE_PAGE;
     }
 
-    @PostMapping("/admin/findUserSendingNotification")
+    @PostMapping("/findUserSendingNotification")
     public String findUserSendingNotification(@RequestParam("first_name") String firstName,
                                               @RequestParam("second_name") String secondName,
                                               ModelMap model) {
@@ -76,7 +78,7 @@ public class AdminController {
         return Path.SEND_NOTIFICATION_PAGE;
     }
 
-    @PostMapping("/admin/setUserStatus")
+    @PostMapping("/setUserStatus")
     public String sendingNotification(@RequestParam("user_id") Long userId,
                                       @RequestParam("userStatusId") Integer userStatusId,
                                       ModelMap model) {
