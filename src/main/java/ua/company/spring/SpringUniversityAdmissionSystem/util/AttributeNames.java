@@ -8,6 +8,7 @@ public class AttributeNames {
     public static final String AVAILABLE_EXAMS;
     public static final String CHOSEN_SPECIALTY;
     public static final String FIRST_NAME;
+    public static final String MESSAGE;
     public static final String NOT_AVAILABLE_SPECIALTY;
     public static final String NUMBER_OF_PAGES;
     public static final String PAGE;
@@ -33,6 +34,7 @@ public class AttributeNames {
             AVAILABLE_EXAMS = properties.getProperty("availableExams");
             CHOSEN_SPECIALTY = properties.getProperty("chosenSpecialty");
             FIRST_NAME = properties.getProperty("firstName");
+            MESSAGE = properties.getProperty("message");
             NOT_AVAILABLE_SPECIALTY = properties.getProperty("notAvailableSpecialty");
             NUMBER_OF_PAGES = properties.getProperty("numberOfPages");
             PAGE = properties.getProperty("page");
