@@ -48,35 +48,6 @@ public class EducationService {
         return educationOptions.map(EducationOption::getSpecialty);
     }
 
-    public Integer getRatingByRequiredSubjects(User user, Integer specialtyId) {
-        Set<Subject> subjects = daoSpecialtySubject.findBySpecialtyId(specialtyId)
-                .stream()
-                .map(SpecialtySubject::getSubject)
-                .collect(Collectors.toSet());
-        int rating = 0;
-        for (Subject subject : subjects) {
-            Optional<Grade> grade = daoGrade.findByUserAndSubject(user, subject);
-            if (grade.isPresent()) {
-                rating += grade.get().getResult();
-            } else {
-                throw new SubmitSpecialtyException("No grade");
-            }
-        }
-        return rating;
-    }
-
-    public Specialty submitRequest(User user, Integer rating, Integer universityId, Integer specialtyId) {
-        Optional<EducationOption> educationOption =
-                daoEducationOption.findByUniversityIdAndSpecialtyId(universityId, specialtyId);
-        Request request = new Request.Builder()
-                .setUser(user)
-                .setRating(rating)
-                .setEducationOption(educationOption.orElseThrow(RuntimeException::new))
-                .build();
-        Request saved = daoRequest.save(request);
-        return saved.getEducationOption().getSpecialty();
-    }
-
     public Specialty getSpecialty(Integer specialtyId) {
         return daoSpecialty.find(specialtyId).orElseThrow(RuntimeException::new);
     }
@@ -91,5 +62,35 @@ public class EducationService {
     public void dropUserSpecialtyRequest(User user) {
         Optional<Request> request = daoRequest.findByUser(user);
         request.ifPresent(r -> daoRequest.delete(r));
+    }
+
+    public Specialty submitRequest(User user, Integer universityId, Integer specialtyId) {
+        Integer rating = getRatingByRequiredSubjects(user, specialtyId);
+        Optional<EducationOption> educationOption =
+                daoEducationOption.findByUniversityIdAndSpecialtyId(universityId, specialtyId);
+        Request request = new Request.Builder()
+                .setUser(user)
+                .setRating(rating)
+                .setEducationOption(educationOption.orElseThrow(RuntimeException::new))
+                .build();
+        Request saved = daoRequest.save(request);
+        return saved.getEducationOption().getSpecialty();
+    }
+
+    private Integer getRatingByRequiredSubjects(User user, Integer specialtyId) {
+        Set<Subject> subjects = daoSpecialtySubject.findBySpecialtyId(specialtyId)
+                .stream()
+                .map(SpecialtySubject::getSubject)
+                .collect(Collectors.toSet());
+        int rating = 0;
+        for (Subject subject : subjects) {
+            Optional<Grade> grade = daoGrade.findByUserAndSubject(user, subject);
+            if (grade.isPresent()) {
+                rating += grade.get().getResult();
+            } else {
+                throw new SubmitSpecialtyException("No grade");
+            }
+        }
+        return rating;
     }
 }

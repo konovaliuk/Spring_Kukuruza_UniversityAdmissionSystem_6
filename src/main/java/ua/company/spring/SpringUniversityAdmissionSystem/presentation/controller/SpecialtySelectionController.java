@@ -46,8 +46,7 @@ public class SpecialtySelectionController {
                                   @RequestParam("specialtyId") Integer specialtyId,
                                   @ModelAttribute User user,
                                   ModelMap model) {
-        Integer rating = service.getRatingByRequiredSubjects(user, specialtyId);
-        Specialty chosenSpecialty = service.submitRequest(user, rating, universityId, specialtyId);
+        Specialty chosenSpecialty = service.submitRequest(user, universityId, specialtyId);
         model.addAttribute(AttributeNames.CHOSEN_SPECIALTY, chosenSpecialty);
         return "redirect:/universitySelection";
     }
