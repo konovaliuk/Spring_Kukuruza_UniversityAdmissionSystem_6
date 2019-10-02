@@ -18,18 +18,19 @@
             <fmt:message key="errorPage.advice" bundle="${lang}"/>
         </p>
         <hr class="my-4">
-        <c:if test="${(sessionScope.user eq null) or (sessionScope.user.userTypeId eq UserTypes.STUDENT.id)}">
+        <c:if test="${(sessionScope.user eq null) or (sessionScope.user.userType.id eq UserTypes.STUDENT.id)}">
             <a class="btn btn-light font-weight-bold" href="<c:url value="/index"/>" role="button">
                 <fmt:message key="errorPage.button" bundle="${lang}"/>
             </a>
         </c:if>
-        <c:if test="${sessionScope.user.userTypeId eq UserTypes.ADMIN.id}">
-            <a class="btn btn-light font-weight-bold" href="<c:url value="/adminPage"/>"
+        <c:if test="${sessionScope.user.userType.id eq UserTypes.ADMIN.id}">
+            <a class="btn btn-light font-weight-bold" href="<c:url value="/admin/adminPage"/>"
                role="button">
                 <fmt:message key="errorPage.button" bundle="${lang}"/>
             </a>
         </c:if>
     </div>
+    <article class="invisible">Message: ${requestScope.message}</article>
 </div>
 </body>
 </html>
