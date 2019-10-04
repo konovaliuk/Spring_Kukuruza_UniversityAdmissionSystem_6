@@ -1,6 +1,7 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.presentation.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ import java.util.Objects;
 @Controller
 @SessionAttributes("user")
 @AllArgsConstructor
+@Log4j2
 public class SpecialtySelectionController {
     private static final int RECORDS_PER_PAGE = 9;
     private final EducationService service;
@@ -30,6 +32,7 @@ public class SpecialtySelectionController {
     public String selectUniversity(@RequestParam("universityId") Integer universityId,
                                    @RequestParam(value = "page", required = false) Integer page,
                                    ModelMap model) {
+        log.info("Start of university selection process");
         if (Objects.isNull(page))
             page = 0;
         Page<Specialty> specialties = service.getSpecialties(universityId, PageRequest.of(page, RECORDS_PER_PAGE));
@@ -40,17 +43,20 @@ public class SpecialtySelectionController {
     }
 
     @PostMapping("/submitSpecialty")
-    public String selectSpecialty(@RequestParam("universityId") Integer universityId,
+    public String submitSpecialty(@RequestParam("universityId") Integer universityId,
                                   @RequestParam("specialtyId") Integer specialtyId,
                                   @ModelAttribute User user,
                                   ModelMap model) {
+        log.info("Start of submitting specialty process");
         Specialty chosenSpecialty = service.submitRequest(user, universityId, specialtyId);
+        log.info("User successfully chose a specialty");
         model.addAttribute(AttributeNames.CHOSEN_SPECIALTY, chosenSpecialty);
         return "redirect:/universitySelection";
     }
 
     @ExceptionHandler(SubmitSpecialtyException.class)
-    public ModelAndView registrationError(WebRequest req) {
+    public ModelAndView registrationError(WebRequest req, SubmitSpecialtyException e) {
+        log.info("Submitting specialty fail", e);
         Integer universityId = Integer.valueOf(Objects.requireNonNull(req.getParameter("universityId")));
         Integer specialtyId = Integer.valueOf(Objects.requireNonNull(req.getParameter("specialtyId")));
         int page = Integer.parseInt(Objects.requireNonNull(req.getParameter("page")));

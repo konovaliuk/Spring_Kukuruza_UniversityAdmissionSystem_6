@@ -1,6 +1,7 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.presentation.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +20,13 @@ import java.util.Optional;
 @Controller
 @SessionAttributes("user")
 @AllArgsConstructor
+@Log4j2
 public class SummaryRatingController {
     private final SummaryRatingService service;
 
     @GetMapping("/rating")
     public String getSummaryRating(@ModelAttribute User user, ModelMap model) {
+        log.info("Try to get summary rating page");
         Optional<Request> userRequest = service.getUserRequest(user);
         if (userRequest.isPresent()) {
             EducationOption educationOption = userRequest.get().getEducationOption();

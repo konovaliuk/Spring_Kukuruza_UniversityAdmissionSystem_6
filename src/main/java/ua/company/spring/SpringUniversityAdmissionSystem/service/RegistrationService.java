@@ -1,6 +1,7 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.service;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoUser;
@@ -16,12 +17,14 @@ import java.util.Optional;
 @Service
 @Transactional
 @AllArgsConstructor
+@Log4j2
 public class RegistrationService {
     private final IDaoUser daoUser;
     private final IDaoUserType daoUserType;
     private final IDaoUserStatus daoUserStatus;
 
     public User register(User user) {
+        log.info("Try to register new user");
         user.setLogin(user.getLogin().toLowerCase());
         user.setEmail(user.getEmail().toLowerCase());
         user.setPassportCode(user.getPassportCode().toLowerCase());
@@ -40,6 +43,7 @@ public class RegistrationService {
         if (userWithSamePassportCode.isPresent())
             throw new RegistrationException("User with the same passport code is already exist.");
 
+        log.info("User validation successfully done. Try to save new user");
         return daoUser.save(user);
     }
 }

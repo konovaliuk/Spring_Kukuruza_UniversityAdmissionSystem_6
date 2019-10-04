@@ -1,6 +1,7 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.service;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoExam;
@@ -18,12 +19,14 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @AllArgsConstructor
+@Log4j2
 public class ExamService {
     private final IDaoUserExam daoUserExam;
     private final IDaoExam daoExam;
 
     @Transactional(readOnly = true)
     public List<Exam> getUserExams(User user) {
+        log.info("Try to get a list of user exams");
         List<UserExam> userExams = daoUserExam.findByUser(user);
         return userExams.stream()
                 .map(UserExam::getExam)
@@ -32,6 +35,7 @@ public class ExamService {
 
     @Transactional(readOnly = true)
     public List<Exam> getAvailableExams(List<Exam> userExams) {
+        log.info("Try to get a list of user available exams");
         if (userExams.isEmpty())
             return daoExam.findAll();
         Set<Integer> id = userExams.stream().map(Exam::getId).collect(Collectors.toSet());
@@ -39,6 +43,7 @@ public class ExamService {
     }
 
     public void cancelRegistrationUserToExams(User user, String[] examsId) {
+        log.info("Try to cancel user registration to exams");
         Set<Integer> examsIdSet = convertToSet(examsId);
         List<Exam> exams = daoExam.findByIdIn(examsIdSet);
         List<UserExam> userExams = daoUserExam.findByExamInAndUser(exams, user);
@@ -46,6 +51,7 @@ public class ExamService {
     }
 
     public void registerUserToExams(User user, String[] examsId) {
+        log.info("Try to register user to exams");
         Set<Integer> examsIdSet = convertToSet(examsId);
         List<Exam> exams = daoExam.findByIdIn(examsIdSet);
         List<UserExam> userExams = createUserExams(user, exams);

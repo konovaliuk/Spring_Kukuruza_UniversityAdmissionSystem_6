@@ -1,6 +1,7 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.service;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoUser;
@@ -13,11 +14,13 @@ import java.util.Optional;
 @Service
 @Transactional
 @AllArgsConstructor
-public class SignInService {
+@Log4j2
+public class AuthenticationService {
     private final IDaoUser daoUser;
 
     @Transactional(readOnly = true)
     public User signIn(String login, String password) {
+        log.info("Try to sign in");
         if (Objects.isNull(login) || Objects.isNull(password))
             throw new SignInException("Please fill all of the fields of the form!");
 
