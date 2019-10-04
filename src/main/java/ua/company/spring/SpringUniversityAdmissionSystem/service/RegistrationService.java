@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoUser;
@@ -14,16 +15,11 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class RegistrationService {
-    private IDaoUser daoUser;
-    private IDaoUserType daoUserType;
-    private IDaoUserStatus daoUserStatus;
-
-    public RegistrationService(IDaoUser daoUser, IDaoUserType daoUserType, IDaoUserStatus daoUserStatus) {
-        this.daoUser = daoUser;
-        this.daoUserType = daoUserType;
-        this.daoUserStatus = daoUserStatus;
-    }
+    private final IDaoUser daoUser;
+    private final IDaoUserType daoUserType;
+    private final IDaoUserStatus daoUserStatus;
 
     public User register(User user) {
         user.setLogin(user.getLogin().toLowerCase());

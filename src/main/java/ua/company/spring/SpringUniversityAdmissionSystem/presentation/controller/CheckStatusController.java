@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.presentation.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,12 +13,9 @@ import ua.company.spring.SpringUniversityAdmissionSystem.util.Path;
 
 @Controller
 @SessionAttributes("user")
+@AllArgsConstructor
 public class CheckStatusController {
-    private CheckStatusService service;
-
-    public CheckStatusController(CheckStatusService service) {
-        this.service = service;
-    }
+    private final CheckStatusService service;
 
     @GetMapping("/checkStatus")
     public String checkStatus(@ModelAttribute User user, Model model) {

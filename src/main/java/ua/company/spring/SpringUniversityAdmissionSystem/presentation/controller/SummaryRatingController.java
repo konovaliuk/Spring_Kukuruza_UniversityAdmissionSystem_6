@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.presentation.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +18,9 @@ import java.util.Optional;
 
 @Controller
 @SessionAttributes("user")
+@AllArgsConstructor
 public class SummaryRatingController {
-    private SummaryRatingService service;
-
-    public SummaryRatingController(SummaryRatingService service) {
-        this.service = service;
-    }
+    private final SummaryRatingService service;
 
     @GetMapping("/rating")
     public String getSummaryRating(@ModelAttribute User user, ModelMap model) {

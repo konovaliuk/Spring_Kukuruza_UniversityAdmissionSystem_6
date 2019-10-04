@@ -34,15 +34,15 @@ public class RegistrationController {
                                    @RequestParam("phone") String phone,
                                    @RequestParam("password") String password,
                                    Model model) {
-        User newUser = new User.Builder()
-                .setLogin(login)
-                .setFirstName(firstName)
-                .setSecondName(secondName)
-                .setPassportCode(passportCode)
-                .setGender(gender)
-                .setEmail(email)
-                .setPhone(phone)
-                .setPassword(password)
+        User newUser = User.builder()
+                .login(login)
+                .firstName(firstName)
+                .secondName(secondName)
+                .passportCode(passportCode)
+                .gender(gender)
+                .email(email)
+                .phone(phone)
+                .password(password)
                 .build();
         User saved = registrationService.register(newUser);
         model.addAttribute(AttributeNames.USER, saved);

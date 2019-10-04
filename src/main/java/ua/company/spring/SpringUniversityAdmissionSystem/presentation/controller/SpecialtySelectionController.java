@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.presentation.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -20,13 +21,10 @@ import java.util.Objects;
 
 @Controller
 @SessionAttributes("user")
+@AllArgsConstructor
 public class SpecialtySelectionController {
     private static final int RECORDS_PER_PAGE = 9;
-    private EducationService service;
-
-    public SpecialtySelectionController(EducationService service) {
-        this.service = service;
-    }
+    private final EducationService service;
 
     @RequestMapping(value = "/selectUniversity", method = {RequestMethod.POST, RequestMethod.GET})
     public String selectUniversity(@RequestParam("universityId") Integer universityId,

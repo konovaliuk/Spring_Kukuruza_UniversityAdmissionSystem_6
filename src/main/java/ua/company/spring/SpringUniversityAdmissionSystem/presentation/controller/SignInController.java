@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.presentation.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,12 +14,9 @@ import ua.company.spring.SpringUniversityAdmissionSystem.util.UserTypes;
 
 @Controller
 @SessionAttributes(types = User.class)
+@AllArgsConstructor
 public class SignInController {
-    private SignInService signInService;
-
-    public SignInController(SignInService signInService) {
-        this.signInService = signInService;
-    }
+    private final SignInService signInService;
 
     @GetMapping("/signIn")
     public String getSignIn() {

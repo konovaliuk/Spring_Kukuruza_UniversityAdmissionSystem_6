@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoExam;
@@ -16,14 +17,10 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class ExamService {
-    private IDaoUserExam daoUserExam;
-    private IDaoExam daoExam;
-
-    public ExamService(IDaoUserExam daoUserExam, IDaoExam daoExam) {
-        this.daoUserExam = daoUserExam;
-        this.daoExam = daoExam;
-    }
+    private final IDaoUserExam daoUserExam;
+    private final IDaoExam daoExam;
 
     @Transactional(readOnly = true)
     public List<Exam> getUserExams(User user) {
@@ -66,9 +63,9 @@ public class ExamService {
     private List<UserExam> createUserExams(User user, List<Exam> exams) {
         List<UserExam> userExams = new ArrayList<>();
         for (Exam exam : exams) {
-            UserExam userExam = new UserExam.Builder()
-                    .setUser(user)
-                    .setExam(exam)
+            UserExam userExam = UserExam.builder()
+                    .user(user)
+                    .exam(exam)
                     .build();
             userExams.add(userExam);
         }

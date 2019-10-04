@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.presentation.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +17,9 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
+@AllArgsConstructor
 public class AdminController {
-    private AdminService service;
-
-    public AdminController(AdminService service) {
-        this.service = service;
-    }
+    private final AdminService service;
 
     @GetMapping("/adminPage")
     public String adminPage() {

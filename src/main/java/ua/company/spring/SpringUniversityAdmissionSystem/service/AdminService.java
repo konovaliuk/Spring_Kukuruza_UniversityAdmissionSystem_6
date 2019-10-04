@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoGrade;
@@ -16,19 +17,12 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class AdminService {
-    private IDaoGrade daoGrade;
-    private IDaoSubject daoSubject;
-    private IDaoUser daoUser;
-    private IDaoUserStatus daoUserStatus;
-
-    public AdminService(IDaoGrade daoGrade, IDaoSubject daoSubject,
-                        IDaoUser daoUser, IDaoUserStatus daoUserStatus) {
-        this.daoGrade = daoGrade;
-        this.daoSubject = daoSubject;
-        this.daoUser = daoUser;
-        this.daoUserStatus = daoUserStatus;
-    }
+    private final IDaoGrade daoGrade;
+    private final IDaoSubject daoSubject;
+    private final IDaoUser daoUser;
+    private final IDaoUserStatus daoUserStatus;
 
     @Transactional(readOnly = true)
     public List<User> findUsers(String firstName, String secondName) {
@@ -49,10 +43,10 @@ public class AdminService {
             grade.setResult(result);
             daoGrade.update(grade);
         } else {
-            Grade grade = new Grade.Builder()
-                    .setUser(user)
-                    .setSubject(subject)
-                    .setResult(result)
+            Grade grade = Grade.builder()
+                    .user(user)
+                    .subject(subject)
+                    .result(result)
                     .build();
             daoGrade.save(grade);
         }

@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoUser;
@@ -11,12 +12,9 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class SignInService {
-    private IDaoUser daoUser;
-
-    public SignInService(IDaoUser daoUser) {
-        this.daoUser = daoUser;
-    }
+    private final IDaoUser daoUser;
 
     @Transactional(readOnly = true)
     public User signIn(String login, String password) {

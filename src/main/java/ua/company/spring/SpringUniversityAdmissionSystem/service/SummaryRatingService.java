@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoRequest;
@@ -14,12 +15,9 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class SummaryRatingService {
-    private IDaoRequest daoRequest;
-
-    public SummaryRatingService(IDaoRequest daoRequest) {
-        this.daoRequest = daoRequest;
-    }
+    private final IDaoRequest daoRequest;
 
     @Transactional(readOnly = true)
     public Optional<Request> getUserRequest(User user) {

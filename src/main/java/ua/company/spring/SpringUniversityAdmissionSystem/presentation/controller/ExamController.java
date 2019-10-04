@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.presentation.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +15,9 @@ import java.util.Objects;
 
 @Controller
 @SessionAttributes("user")
+@AllArgsConstructor
 public class ExamController {
-    private ExamService service;
-
-    public ExamController(ExamService service) {
-        this.service = service;
-    }
+    private final ExamService service;
 
     @GetMapping("/exam")
     public String getExamPage(@ModelAttribute User user, ModelMap model) {

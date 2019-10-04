@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoUser;
@@ -7,12 +8,9 @@ import ua.company.spring.SpringUniversityAdmissionSystem.persistence.entity.User
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class CheckStatusService {
-    private IDaoUser daoUser;
-
-    public CheckStatusService(IDaoUser daoUser) {
-        this.daoUser = daoUser;
-    }
+    private final IDaoUser daoUser;
 
     @Transactional(readOnly = true)
     public User getUpdatedUser(User user) {

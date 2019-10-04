@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,24 +17,14 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class EducationService {
-    private IDaoEducationOption daoEducationOption;
-    private IDaoGrade daoGrade;
-    private IDaoRequest daoRequest;
-    private IDaoSpecialty daoSpecialty;
-    private IDaoSpecialtySubject daoSpecialtySubject;
-    private IDaoUniversity daoUniversity;
-
-    public EducationService(IDaoEducationOption daoEducationOption, IDaoGrade daoGrade,
-                            IDaoRequest daoRequest, IDaoSpecialty daoSpecialty,
-                            IDaoSpecialtySubject daoSpecialtySubject, IDaoUniversity daoUniversity) {
-        this.daoEducationOption = daoEducationOption;
-        this.daoGrade = daoGrade;
-        this.daoRequest = daoRequest;
-        this.daoSpecialty = daoSpecialty;
-        this.daoSpecialtySubject = daoSpecialtySubject;
-        this.daoUniversity = daoUniversity;
-    }
+    private final IDaoEducationOption daoEducationOption;
+    private final IDaoGrade daoGrade;
+    private final IDaoRequest daoRequest;
+    private final IDaoSpecialty daoSpecialty;
+    private final IDaoSpecialtySubject daoSpecialtySubject;
+    private final IDaoUniversity daoUniversity;
 
     @Transactional(readOnly = true)
     public Optional<Specialty> getChosenSpecialty(User user) {
@@ -68,17 +59,17 @@ public class EducationService {
 
     public void dropUserSpecialtyRequest(User user) {
         Optional<Request> request = daoRequest.findByUser(user);
-        request.ifPresent(r -> daoRequest.delete(r));
+        request.ifPresent(daoRequest::delete);
     }
 
     public Specialty submitRequest(User user, Integer universityId, Integer specialtyId) {
         Integer rating = getRatingByRequiredSubjects(user, specialtyId);
         Optional<EducationOption> educationOption =
                 daoEducationOption.findByUniversityIdAndSpecialtyId(universityId, specialtyId);
-        Request request = new Request.Builder()
-                .setUser(user)
-                .setRating(rating)
-                .setEducationOption(educationOption.orElseThrow(RuntimeException::new))
+        Request request = Request.builder()
+                .user(user)
+                .rating(rating)
+                .educationOption(educationOption.orElseThrow(RuntimeException::new))
                 .build();
         Request saved = daoRequest.save(request);
         return saved.getEducationOption().getSpecialty();
