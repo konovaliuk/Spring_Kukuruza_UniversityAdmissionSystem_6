@@ -1,6 +1,7 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoRequest;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.entity.EducationOption;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.entity.Request;
@@ -12,6 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class SummaryRatingService {
     private IDaoRequest daoRequest;
 
@@ -19,10 +21,12 @@ public class SummaryRatingService {
         this.daoRequest = daoRequest;
     }
 
+    @Transactional(readOnly = true)
     public Optional<Request> getUserRequest(User user) {
         return daoRequest.findByUser(user);
     }
 
+    @Transactional(readOnly = true)
     public List<Request> getRequestsByEducationOptionOrderByRating(EducationOption educationOption) {
         List<Request> requests = daoRequest.findByEducationOption(educationOption);
         return requests.stream()

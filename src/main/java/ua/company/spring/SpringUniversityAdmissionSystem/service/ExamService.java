@@ -1,6 +1,7 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoExam;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoUserExam;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.entity.Exam;
@@ -14,6 +15,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class ExamService {
     private IDaoUserExam daoUserExam;
     private IDaoExam daoExam;
@@ -23,6 +25,7 @@ public class ExamService {
         this.daoExam = daoExam;
     }
 
+    @Transactional(readOnly = true)
     public List<Exam> getUserExams(User user) {
         List<UserExam> userExams = daoUserExam.findByUser(user);
         return userExams.stream()
@@ -30,6 +33,7 @@ public class ExamService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public List<Exam> getAvailableExams(List<Exam> userExams) {
         if (userExams.isEmpty())
             return daoExam.findAll();

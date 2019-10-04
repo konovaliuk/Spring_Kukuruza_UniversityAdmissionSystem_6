@@ -3,6 +3,7 @@ package ua.company.spring.SpringUniversityAdmissionSystem.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.*;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.entity.*;
 import ua.company.spring.SpringUniversityAdmissionSystem.service.exception.SubmitSpecialtyException;
@@ -14,6 +15,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class EducationService {
     private IDaoEducationOption daoEducationOption;
     private IDaoGrade daoGrade;
@@ -33,25 +35,30 @@ public class EducationService {
         this.daoUniversity = daoUniversity;
     }
 
+    @Transactional(readOnly = true)
     public Optional<Specialty> getChosenSpecialty(User user) {
         Optional<Request> userRequest = daoRequest.findByUser(user);
         return userRequest.map(request -> request.getEducationOption().getSpecialty());
     }
 
+    @Transactional(readOnly = true)
     public Page<University> getUniversities(Pageable pageable) {
         return daoUniversity.findAll(pageable);
     }
 
+    @Transactional(readOnly = true)
     public Page<Specialty> getSpecialties(Integer universityId, Pageable pageable) {
         University university = daoUniversity.find(universityId).orElseThrow(RuntimeException::new);
         Page<EducationOption> educationOptions = daoEducationOption.findByUniversity(university, pageable);
         return educationOptions.map(EducationOption::getSpecialty);
     }
 
+    @Transactional(readOnly = true)
     public Specialty getSpecialty(Integer specialtyId) {
         return daoSpecialty.find(specialtyId).orElseThrow(RuntimeException::new);
     }
 
+    @Transactional(readOnly = true)
     public List<Subject> getRequiredSubjects(Integer specialtyId) {
         Set<SpecialtySubject> specialtySubjects = daoSpecialtySubject.findBySpecialtyId(specialtyId);
         return specialtySubjects.stream()

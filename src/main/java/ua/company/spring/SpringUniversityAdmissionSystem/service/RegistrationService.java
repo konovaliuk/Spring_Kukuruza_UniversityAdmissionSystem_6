@@ -1,6 +1,7 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoUser;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoUserStatus;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoUserType;
@@ -12,6 +13,7 @@ import ua.company.spring.SpringUniversityAdmissionSystem.util.UserTypes;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class RegistrationService {
     private IDaoUser daoUser;
     private IDaoUserType daoUserType;

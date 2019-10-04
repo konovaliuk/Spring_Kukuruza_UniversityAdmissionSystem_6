@@ -1,6 +1,7 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoGrade;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoSubject;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoUser;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class AdminService {
     private IDaoGrade daoGrade;
     private IDaoSubject daoSubject;
@@ -28,10 +30,12 @@ public class AdminService {
         this.daoUserStatus = daoUserStatus;
     }
 
+    @Transactional(readOnly = true)
     public List<User> findUsers(String firstName, String secondName) {
         return daoUser.findByFirstNameAndSecondName(firstName, secondName);
     }
 
+    @Transactional(readOnly = true)
     public List<Subject> getAllSubjects() {
         return daoSubject.findAll();
     }
