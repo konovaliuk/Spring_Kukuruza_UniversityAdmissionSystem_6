@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.springDataJpa;
 
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -12,12 +13,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@AllArgsConstructor
 public class DaoImplEducationOption implements IDaoEducationOption {
-    private IEducationOptionRepository repository;
-
-    public DaoImplEducationOption(IEducationOptionRepository repository) {
-        this.repository = repository;
-    }
+    private final IEducationOptionRepository repository;
 
     @Override
     public void delete(EducationOption educationOption) {

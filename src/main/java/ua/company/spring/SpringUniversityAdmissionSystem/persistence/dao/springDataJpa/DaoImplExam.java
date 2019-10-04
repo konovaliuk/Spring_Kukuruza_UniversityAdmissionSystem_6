@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.springDataJpa;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoExam;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.entity.Exam;
@@ -10,12 +11,9 @@ import java.util.Optional;
 import java.util.Set;
 
 @Repository
+@AllArgsConstructor
 public class DaoImplExam implements IDaoExam {
-    private IExamRepository repository;
-
-    public DaoImplExam(IExamRepository repository) {
-        this.repository = repository;
-    }
+    private final IExamRepository repository;
 
     @Override
     public void delete(Exam entity) {

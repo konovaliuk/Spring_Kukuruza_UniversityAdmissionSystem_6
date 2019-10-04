@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.springDataJpa;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoGrade;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.entity.Grade;
@@ -11,12 +12,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@AllArgsConstructor
 public class DaoImplGrade implements IDaoGrade {
-    private IGradeRepository repository;
-
-    public DaoImplGrade(IGradeRepository repository) {
-        this.repository = repository;
-    }
+    private final IGradeRepository repository;
 
     @Override
     public void delete(Grade entity) {

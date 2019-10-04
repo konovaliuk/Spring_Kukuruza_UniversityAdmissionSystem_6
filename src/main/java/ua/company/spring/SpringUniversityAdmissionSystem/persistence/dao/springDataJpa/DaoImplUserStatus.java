@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.springDataJpa;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoUserStatus;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.entity.UserStatus;
@@ -9,12 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@AllArgsConstructor
 public class DaoImplUserStatus implements IDaoUserStatus {
-    private IUserStatusRepository repository;
-
-    public DaoImplUserStatus(IUserStatusRepository userStatusRepository) {
-        this.repository = userStatusRepository;
-    }
+    private final IUserStatusRepository repository;
 
     @Override
     public void delete(UserStatus entity) {

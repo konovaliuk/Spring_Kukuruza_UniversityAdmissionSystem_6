@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.springDataJpa;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoUser;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.entity.User;
@@ -9,12 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@AllArgsConstructor
 public class DaoImplUser implements IDaoUser {
-    private IUserRepository repository;
-
-    public DaoImplUser(IUserRepository userRepository) {
-        this.repository = userRepository;
-    }
+    private final IUserRepository repository;
 
     @Override
     public void delete(User entity) {

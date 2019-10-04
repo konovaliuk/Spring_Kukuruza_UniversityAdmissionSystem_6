@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.springDataJpa;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoUserType;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.entity.UserType;
@@ -9,12 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@AllArgsConstructor
 public class DaoImplUserType implements IDaoUserType {
-    private IUserTypeRepository repository;
-
-    public DaoImplUserType(IUserTypeRepository userTypeRepository) {
-        this.repository = userTypeRepository;
-    }
+    private final IUserTypeRepository repository;
 
     @Override
     public void delete(UserType entity) {

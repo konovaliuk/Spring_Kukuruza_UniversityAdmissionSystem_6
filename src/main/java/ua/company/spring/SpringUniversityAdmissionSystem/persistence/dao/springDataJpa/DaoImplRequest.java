@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.springDataJpa;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoRequest;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.entity.EducationOption;
@@ -11,12 +12,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@AllArgsConstructor
 public class DaoImplRequest implements IDaoRequest {
-    private IRequestRepository repository;
-
-    public DaoImplRequest(IRequestRepository repository) {
-        this.repository = repository;
-    }
+    private final IRequestRepository repository;
 
     @Override
     public void delete(Request request) {

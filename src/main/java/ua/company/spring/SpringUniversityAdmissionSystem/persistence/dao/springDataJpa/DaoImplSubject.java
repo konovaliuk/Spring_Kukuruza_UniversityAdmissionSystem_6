@@ -1,5 +1,6 @@
 package ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.springDataJpa;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.dao.IDaoSubject;
 import ua.company.spring.SpringUniversityAdmissionSystem.persistence.entity.Subject;
@@ -9,12 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@AllArgsConstructor
 public class DaoImplSubject implements IDaoSubject {
-    private ISubjectRepository repository;
-
-    public DaoImplSubject(ISubjectRepository repository) {
-        this.repository = repository;
-    }
+    private final ISubjectRepository repository;
 
     @Override
     public void delete(Subject entity) {
