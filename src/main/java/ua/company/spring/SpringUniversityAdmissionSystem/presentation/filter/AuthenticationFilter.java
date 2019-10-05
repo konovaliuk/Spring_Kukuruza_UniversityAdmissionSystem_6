@@ -21,6 +21,7 @@ public class AuthenticationFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
         String rootURI = req.getContextPath() + "/";
+        String assertURI = req.getContextPath() + "/assets";
         String indexURI = req.getContextPath() + "/index";
         String registrationURI = req.getContextPath() + "/registration";
         String localizationURI = req.getContextPath() + "/localization";
@@ -28,6 +29,7 @@ public class AuthenticationFilter implements Filter {
 
         boolean isLoggedIn = Objects.nonNull(session) && Objects.nonNull(session.getAttribute(AttributeNames.USER));
         boolean isRootRequest = req.getRequestURI().equals(rootURI);
+        boolean isAssertRequest = req.getRequestURI().startsWith(assertURI);
         boolean isIndexRequest = req.getRequestURI().equals(indexURI);
         boolean isRegistrationRequest = req.getRequestURI().equals(registrationURI);
         boolean isLocalizationRequest = req.getRequestURI().equals(localizationURI);
@@ -40,7 +42,8 @@ public class AuthenticationFilter implements Filter {
                 chain.doFilter(req, resp);
             }
         } else {
-            if (isIndexRequest || isRegistrationRequest || isRootRequest || isSignInRequest || isLocalizationRequest) {
+            if (isIndexRequest || isRegistrationRequest || isRootRequest ||
+                    isSignInRequest || isLocalizationRequest || isAssertRequest) {
                 chain.doFilter(req, resp);
             } else {
                 resp.sendRedirect(signInURI);
